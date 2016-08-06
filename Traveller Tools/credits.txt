@@ -1,0 +1,15 @@
+This applicaiton was written as a tool for Traveller GMs to have system data, with decriptions, at their fingertips and was driven by my need while running the Pirats of Drinax campaign published by Mongoose Publishing and available free at their site. 
+
+All data included with this application has been collected from freely available sources and if copyrighted by Far Future Enterprises or Mongoose Publishing. 
+
+The basic system data was imported from TravellerMap.com and is part of the T5 Second Survey, copyrighted by Far Future Enterprises and others as detailed on TravellerMap.com (http://travellermap.com/doc/credits)
+Any information provided in the "Notes" section and the Subsector Library Information is Copyrighted by Mongoose Publishing. 
+
+Maps are provided by TravellerMap.com via use of their API. 
+
+
+Written by Rich "DickNervous" Neves
+dick@nervoused.com
+
+The Traveller game in all forms is owned by Far Future Enterprises. Copyright © 1977 – 2015 Far Future Enterprises. Traveller is a registered trademark of Far Future Enterprises. Far Future permits web sites and fanzines for this game, provided it contains this notice, that Far Future is notified, and subject to a withdrawal of permission on 90 days notice. The contents of this site are for personal, non-commercial use only. Any use of Far Future Enterprises's copyrighted material or trademarks anywhere on this web site and its files should not be viewed as a challenge to those copyrights or trademarks. In addition, any program/articles/file on this site cannot be republished or distributed without the consent of the author who contributed it.
+

@@ -1,0 +1,994 @@
+﻿<Controls:MetroWindow x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:Traveller_Tools"
+        mc:Ignorable="d"
+        Title="Travller GM Tools" Height="750" Width="1200" Foreground="Red" Background="Black" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+
+
+    <!-- Data Bindings for the tables -->
+    <Window.Resources>
+        <local:Traveller_System_DataDataSet x:Key="Traveller_System_DataDataSet"/>
+        <CollectionViewSource x:Key="System_MasterViewSource" Source="{Binding System_Master, Source={StaticResource Traveller_System_DataDataSet}}"/>
+    </Window.Resources>
+
+
+    <!-- Definition for the MainGrid that controls the layout of the entire window -->
+    <Grid x:Name="MainGrid" Width="1180" Height="710" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="600*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+
+        <!--  __________________________________________________________________________________________________________________________________ -->
+        <!-- START SYSTEM INFO HEADER ROW -->
+        <Grid x:Name="SystemBar" HorizontalAlignment="Left" Height="40" Margin="0,0,-300,0" Width="1180" Grid.ColumnSpan="2" Background="#FF660B02" VerticalAlignment="Center">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="175"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="175"/>
+                <ColumnDefinition Width="65"/>
+                <ColumnDefinition Width="175"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="175"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="150*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="systemBox" HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="System" VerticalAlignment="Center" Width="60" FontFamily="Oregon LDO Black" FontSize="16" FontWeight="Bold" Foreground="White" IsReadOnly="True" Margin="0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <Grid x:Name="systemName" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Height="40" Width="175">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ComboBox x:Name="NameComboBox" Grid.Column="1" DisplayMemberPath="Name" HorizontalAlignment="Left" Height="35" ItemsSource="{Binding}" Margin="2,2,0,0" Grid.Row="0" VerticalAlignment="Center" Width="170" FontSize="16">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+            </Grid>
+
+            <TextBox x:Name="UWPBox" HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="UWP:" VerticalAlignment="Center" Width="60" Margin="0" Grid.Column="2" FontFamily="Oregon LDO Black" FontSize="16" FontWeight="Bold" Foreground="White" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <Grid x:Name="gUWPBox" Grid.Column="3" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Height="40" Width="175">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBox x:Name="UWPTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="0" Grid.Row="0" Text="{Binding UWP, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="170" FontFamily="Oregon LDO Black" FontSize="21.333" FontWeight="Bold" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}"/>
+            </Grid>
+
+            <TextBox x:Name="sectorBox" HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="Sector:" VerticalAlignment="Center" Width="70" Margin="0" Grid.Column="4" FontFamily="Oregon LDO Black" FontSize="16" FontWeight="Bold" Foreground="White" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <Grid x:Name="gSectorBox" Grid.Column="5" DataContext="{StaticResource System_MasterViewSource}" Margin="0" VerticalAlignment="Center" Width="175" HorizontalAlignment="Left" Height="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBox x:Name="SectorTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="0" Grid.Row="0" Text="{Binding Sector, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="170" FontFamily="Oregon LDO Black" FontSize="21.333" FontWeight="Bold" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}"/>
+            </Grid>
+
+            <TextBox x:Name="subBox" HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="Subsector:" VerticalAlignment="Center" Width="110" Margin="0" Grid.Column="6" FontFamily="Oregon LDO Black" FontSize="16" FontWeight="Bold" Foreground="White" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <Grid x:Name="gSubsectorBox" Grid.Column="7" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Height="40" Width="175">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBox x:Name="SubsectorTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="0" Grid.Row="0" Text="{Binding subName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="170" FontFamily="Oregon LDO Black" FontSize="21.333" FontWeight="Bold" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}"/>
+            </Grid>
+
+            <TextBox x:Name="hexBox" HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="Hex:" VerticalAlignment="Center" Width="45" Margin="0" Grid.Column="8" FontFamily="Oregon LDO Black" FontSize="16" FontWeight="Bold" Foreground="White" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <Grid x:Name="gHexBox" Grid.Column="9" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Height="40" Width="150">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBox x:Name="HexTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="0" Grid.Row="0" Text="{Binding Hex, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="145" FontFamily="Oregon LDO Black" FontSize="21.333" FontWeight="Bold" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}"/>
+            </Grid>
+        </Grid>
+
+        <!--  __________________________________________________________________________________________________________________________________ -->
+        <!-- START OF TAB CONTROLS for System Information -->
+
+        <TabControl x:Name="systemTabs" Height="670" Width="1180" Grid.Row="1" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Top">
+
+            <!--  __________________________________________________________________________________________________________________________________ -->
+            <!-- Overview Tab -->
+            <TabItem Header="Overview" Controls:ControlsHelper.HeaderFontSize="18" Padding="10,5" BorderThickness="1">
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="1170" Height="650" d:IsLocked="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="620"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid x:Name="SystemDetails" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="625" Height="650">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <!-- Starport Row -->
+                            <RowDefinition Height="50"/>
+                            <!-- Size Row -->
+                            <RowDefinition Height="50"/>
+                            <!-- Atmosphere Row -->
+                            <RowDefinition Height="50"/>
+                            <!-- Hydrosphere Row -->
+                            <RowDefinition Height="50"/>
+                            <!-- Population Row -->
+                            <RowDefinition Height="150"/>
+                            <!-- Government Row -->
+                            <RowDefinition Height="150"/>
+                            <!-- Law Level Row -->
+                            <RowDefinition Height="50"/>
+                            <!-- Tech Level Row -->
+                            <RowDefinition Height="5*"/>
+                            <!-- Buffer -->
+                        </Grid.RowDefinitions>
+
+                        <!--  __________________________________________________________________________________________________________________________________ -->
+                        <!-- Start of the section where each row of the UWP is detailed out -->
+                        <!-- STARPORT ROW -->
+                        <Grid x:Name="starportRow" HorizontalAlignment="Left" VerticalAlignment="Center" Width="620" Height="45">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox x:Name="portValue" HorizontalAlignment="Left" Height="44" Margin="0" TextWrapping="Wrap" Text="Port:" VerticalAlignment="Center" Width="50" BorderBrush="Red" FontWeight="Bold" FontSize="16"/>
+                            <Grid x:Name="gPortVal" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Height="44" Width="45">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="PORTTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="44" Margin="0" Grid.Row="0" Text="{Binding PORT, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="45" FontWeight="Bold" FontFamily="Oregon LDO Black" FontSize="24" BorderBrush="Red" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gPortDesc" Grid.Column="2" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="125" Height="44">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="105"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Berthing" VerticalAlignment="Top" Width="120" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="PortDescTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Text="{Binding portDesc, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="120" Grid.Row="1" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gPortFuel" Grid.Column="3" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="125" Height="44">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Fuel" VerticalAlignment="Top" Width="120" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="PortFuelTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Text="{Binding portFuel, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gPortRepairs" Grid.Column="4" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="44" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Repairs" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="PortRepairsTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Text="{Binding portRepairs, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="245" BorderThickness="1,0,1,1" BorderBrush="Red" IsReadOnly="True"/>
+                            </Grid>
+                        </Grid>
+
+                        <!--  __________________________________________________________________________________________________________________________________ -->
+                        <!-- SIZE ROW __________________________________________________________________________________________________________________________________ -->
+                        <Grid x:Name="sizeRow" HorizontalAlignment="Left" VerticalAlignment="Top" Width="620" Height="45" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox x:Name="sizeValue" HorizontalAlignment="Left" Height="44" Margin="0" TextWrapping="Wrap" Text="Size:" VerticalAlignment="Center" Width="50" BorderBrush="Red" FontWeight="Bold" FontSize="16"/>
+                            <Grid x:Name="gSizeVal" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Height="44" Width="45">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="SZETextBox" Grid.Column="1" HorizontalAlignment="Center" Height="44" Margin="0" Grid.Row="0" Text="{Binding SZE, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="45" FontWeight="Bold" FontFamily="Oregon LDO Black" FontSize="24" BorderBrush="Red" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gSizeDiameter" Grid.Column="2" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="125" Height="44">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="105"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxDiameter" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Diameter" VerticalAlignment="Top" Width="120" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="SizeDiameterTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Text="{Binding sizeDiameter, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="120" Grid.Row="1" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gSizeDesc" Grid.Column="3" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="44" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxDesc" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="SizeDescTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Text="{Binding sizeDesc, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="245" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gSizeGravity" Grid.Column="5" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="125" Height="44">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxSizeGrav" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Gravity" VerticalAlignment="Top" Width="120" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="SizeGravTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Text="{Binding sizeGrav, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120" BorderThickness="1,0,1,1" BorderBrush="Red" IsReadOnly="True"/>
+                            </Grid>
+                        </Grid>
+
+                        <!--  __________________________________________________________________________________________________________________________________ -->
+                        <!-- ATMOSPHERE ROW-->
+                        <Grid x:Name="atmoRow" HorizontalAlignment="Left" VerticalAlignment="Top" Width="620" Height="45" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox x:Name="atmoValue" HorizontalAlignment="Left" Height="44" Margin="0" TextWrapping="Wrap" Text="ATM" VerticalAlignment="Center" Width="50" BorderBrush="Red" FontWeight="Bold" FontSize="16"/>
+                            <Grid x:Name="gAtmoVal" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Height="44" Width="45">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="ATMOTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="44" Margin="0" Grid.Row="0" Text="{Binding ATM, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="45" FontWeight="Bold" FontFamily="Oregon LDO Black" FontSize="24" BorderBrush="Red" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gAtmoDesc" Grid.Column="2" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="125" Height="44">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="105"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxAtmoDesc" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Width="120" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="AtmoDescTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Text="{Binding AtmoDesc, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="120" Grid.Row="1" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gAtmoNotes" Grid.Column="3" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="44" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxAtmoNotes" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="AtmoNotesTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Text="{Binding AtmoNotes, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="245" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+                            <Grid x:Name="Grid10" Grid.Column="5" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="65,24,0,0" VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                            </Grid>
+                        </Grid>
+
+                        <!--  __________________________________________________________________________________________________________________________________ -->
+                        <!-- HYDROSPHERE ROW -->
+                        <Grid x:Name="hyrdoRow" HorizontalAlignment="Left" VerticalAlignment="Top" Width="620" Height="44" Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox x:Name="hydroValue" HorizontalAlignment="Left" Height="44" Margin="0" TextWrapping="Wrap" Text="HYD" VerticalAlignment="Center" Width="50" BorderBrush="Red" FontWeight="Bold" FontSize="16"/>
+                            <Grid x:Name="gHydroVal" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Height="44" Width="45">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="HYDROTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="44" Margin="0" Grid.Row="0" Text="{Binding HYD, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="45" FontWeight="Bold" FontFamily="Oregon LDO Black" FontSize="24" BorderBrush="Red" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gHydroCoverage" Grid.Column="2" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="125" Height="44">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="105"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxHydroCov" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Coverage" VerticalAlignment="Top" Width="120" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="HydroCovTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Text="{Binding hydroCoverage, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="120" Grid.Row="1" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gHydroDesc" Grid.Column="3" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="44" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxHydroDesc" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="HydroDescTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Text="{Binding hydroDesc, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="245" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+                        </Grid>
+
+                        <!--  __________________________________________________________________________________________________________________________________ -->
+                        <!-- POPULATIONS ROW -->
+                        <Grid x:Name="popRow" HorizontalAlignment="Left" VerticalAlignment="Top" Width="620" Height="44" Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox x:Name="popValue" HorizontalAlignment="Left" Height="44" Margin="0" TextWrapping="Wrap" Text="POP" VerticalAlignment="Center" Width="50" BorderBrush="Red" FontWeight="Bold" FontSize="16"/>
+                            <Grid x:Name="gPopVal" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Height="44" Width="45">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="POPTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="44" Margin="0" Grid.Row="0" Text="{Binding POP, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="45" FontWeight="Bold" FontFamily="Oregon LDO Black" FontSize="24" BorderBrush="Red" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gPopAmount" Grid.Column="2" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="44" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="105"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxPopulation" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Population" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="PopulationTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Text="{Binding Population, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="245" Grid.Row="1" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gPopApprox" Grid.Column="4" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="125" Height="44">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxPopApprox" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Approximate" VerticalAlignment="Top" Width="120" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="PopApproxTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Text="{Binding popApprox, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gPopDesc" Grid.Column="5" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0,0,-2,0" VerticalAlignment="Top" Width="125" Height="44">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxPopDesc" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Width="120" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="PopAescTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Text="{Binding popDesc, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+                        </Grid>
+
+
+                        <!--  __________________________________________________________________________________________________________________________________ -->
+                        <!-- GOVERNMENT ROW -->
+                        <Grid x:Name="govtRow" HorizontalAlignment="Left" VerticalAlignment="Top" Width="620" Height="145" Grid.Row="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBox x:Name="govValue" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Height="145" Margin="0" TextWrapping="Wrap" Text="GOV" VerticalAlignment="Center" Width="50" BorderBrush="Red" FontWeight="Bold" FontSize="16" Grid.RowSpan="3"/>
+                            <Grid x:Name="gGOVVal" Grid.Column="1" Grid.Row="0" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Height="145" Width="45" Grid.RowSpan="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="GOVTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="145" Margin="0" Grid.Row="0" Text="{Binding GOV, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="45" FontWeight="Bold" FontFamily="Oregon LDO Black" FontSize="24" BorderBrush="Red" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gGovType" Grid.Column="2" Grid.Row="0" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="45" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="105"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxGovType" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Type" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="govTypeTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Text="{Binding govtType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="245" Grid.Row="1" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gGovDesc" Grid.Column="2" Grid.Row="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="95" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="71"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxGovDesc" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="GovDescTextBox" HorizontalAlignment="Left" Height="75" Margin="0" Grid.Row="1" Text="{Binding govtDesc, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="245" BorderBrush="Red" BorderThickness="1,0,1,1" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True"/>
+                            </Grid>
+
+
+                            <Grid x:Name="gGovExamples" Grid.Column="4" Grid.Row="0" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="45" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxGovExamples" HorizontalAlignment="Left" Height="19"  TextWrapping="Wrap" Text="Examples" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="GovExampleTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Text="{Binding govtExamples, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="245" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gGovContra" Grid.Column="4" Grid.Row="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="95" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="71"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxGovContra" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Contraband" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="GovContraTextBox" HorizontalAlignment="Left" Height="75" Margin="0" Grid.Row="1" Text="{Binding govtContraband, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="245" BorderBrush="Red" BorderThickness="1,0,1,1" TextWrapping="Wrap" IsReadOnly="True"/>
+                            </Grid>
+
+
+                        </Grid>
+
+                        <!--  __________________________________________________________________________________________________________________________________ -->
+                        <!-- LAW LEVEL ROW -->
+                        <Grid x:Name="lawRow" HorizontalAlignment="Left" VerticalAlignment="Top" Width="620" Height="150" Grid.Row="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBox x:Name="lawValue" HorizontalAlignment="Left" Height="145" Grid.RowSpan="3" Grid.Row="0" Grid.Column="0" Margin="0" TextWrapping="Wrap" Text="LAW" VerticalAlignment="Center" Width="50" BorderBrush="Red" FontWeight="Bold" FontSize="16"/>
+                            <Grid x:Name="gLAWVal" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Height="150" Width="45" Grid.RowSpan="3" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="LAWTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="145" Margin="0" Grid.Row="0" Text="{Binding LAW, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="45" FontWeight="Bold" FontFamily="Oregon LDO Black" FontSize="24" BorderBrush="Red" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="glawTrav" Grid.Column="2" Grid.Row="0" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="95" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="75"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxLawTrav" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Grid.Row="0" Text="Travellers" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="LawTravTextBox" HorizontalAlignment="Left" Height="75" Margin="0" Grid.Row="1" Text="{Binding lawTrav, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="245" BorderBrush="Red" BorderThickness="1,0,1,1" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gLawDrugs" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="45">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125"/>
+                                    <ColumnDefinition Width="125"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxLawDrugs" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Drugs" VerticalAlignment="Top" Width="120" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="LawDrugsTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Grid.Column="0" Text="{Binding lawDrugs, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" BorderBrush="Red" BorderThickness="1,0,1,1" TextWrapping="Wrap" IsReadOnly="True"/>
+                                <TextBox x:Name="textBoxLawTech" HorizontalAlignment="Left" Height="19" Grid.Column="1" Grid.Row="0"  TextWrapping="Wrap" Text="Tech" VerticalAlignment="Top" Width="120" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="LawTechTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Grid.Column="1" Text="{Binding lawTech, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gLawWeapons" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="45">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxLawWeapons" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Weapons" VerticalAlignment="Top" Width="240" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="LawWeaponsTextBox" HorizontalAlignment="Left" Height="71" Margin="0" Grid.Row="1" Text="{Binding lawWeapons, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="240" BorderBrush="Red" BorderThickness="1,0,1,1" TextWrapping="Wrap" IsReadOnly="True"/>
+                            </Grid>
+
+
+                            <Grid x:Name="gLawInfo" Grid.Column="4" Grid.Row="0" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="95" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="75"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxLawInfo" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Grid.Row="0" Text="Information" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="LawInfoTextBox" HorizontalAlignment="Left" Height="75" Margin="0" Grid.Row="1" Text="{Binding lawInfo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="245" BorderBrush="Red" BorderThickness="1,0,1,1" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True"/>
+                            </Grid>
+
+
+                        </Grid>
+
+                        <!--  __________________________________________________________________________________________________________________________________ -->
+                        <!-- TECH LEVEL ROW -->
+                        <Grid x:Name="techRow" HorizontalAlignment="Left" VerticalAlignment="Top" Width="620" Height="50" Grid.Row="7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox x:Name="tlValue" HorizontalAlignment="Left" Height="44" Margin="0" TextWrapping="Wrap" Text="TL" VerticalAlignment="Center" Width="50" BorderBrush="Red" FontWeight="Bold" FontSize="16"/>
+                            <Grid x:Name="gTLVal" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Height="50" Width="45">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="TLTextBox" Grid.Column="1" HorizontalAlignment="Center" Height="45" Margin="0" Grid.Row="0" Text="{Binding TCH, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="45" FontWeight="Bold" FontFamily="Oregon LDO Black" FontSize="24" BorderBrush="Red" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gTLDesc" Grid.Column="2" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="44" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="105"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxtlDesc" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="tlDescTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Text="{Binding tlDesc, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="245" Grid.Row="1" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+
+                            <Grid x:Name="gTLExample" Grid.Column="4" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="250" Height="44" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="19"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="textBoxTLExamples" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="Examples" VerticalAlignment="Top" Width="245" FontSize="10.667" Background="#00000000" Foreground="Red" BorderBrush="Red" BorderThickness="1,1,1,0"/>
+                                <TextBox x:Name="TLExamplesTextBox" HorizontalAlignment="Left" Height="25" Margin="0" Grid.Row="1" Text="{Binding tlExample, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="245" BorderBrush="Red" BorderThickness="1,0,1,1" IsReadOnly="True"/>
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
+
+                    <!--  __________________________________________________________________________________________________________________________________ -->
+                    <!-- System Description Box -->
+                    <Grid x:Name="sysDesc" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="15,-10,0,0" VerticalAlignment="Top" Grid.Column="1" Width="535" Height="620" Grid.RowSpan="2" Background="#FF660B02">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="800"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="label" Content="System Information" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold" FontSize="21.333" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0"/>
+                        <TextBox x:Name="DescriptionTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="575" Margin="3,3,4,3" Grid.Row="1" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" TextWrapping="Wrap" BorderBrush="#FF660B02" BorderThickness="1,0,1,1" Width="530"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <!--  __________________________________________________________________________________________________________________________________ -->
+            <!-- Details Tab -->
+            <TabItem Header="Details" Controls:ControlsHelper.HeaderFontSize="18" Padding="10,5" BorderThickness="1">
+                <Grid Height="630" Width="1170" HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{StaticResource System_MasterViewSource}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="620"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="gBases" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Bases:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="75"/>
+                        <TextBox x:Name="ExpBaseTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding expBase, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="300" IsReadOnly="True"/>
+                    </Grid>
+                    <Grid x:Name="gNobility" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Nobility:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Background="#00000000" Foreground="Red" Width="75"/>
+                        <TextBox x:Name="ExpNobilityTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding expNobility, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="300" IsReadOnly="True"/>
+                    </Grid>
+                    <Grid x:Name="gAlleDesc" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="3,3,0,0" VerticalAlignment="Top" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="___Label___Allegiances__" Content="Allegiances:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="75"/>
+                        <TextBox x:Name="AllegDescTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="50" Margin="3" Grid.Row="0" Text="{Binding allegDesc, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="300" TextWrapping="Wrap" IsReadOnly="True"/>
+                    </Grid>
+                    <Grid x:Name="gBelts" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="3,3,0,0" VerticalAlignment="Top" Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="___Label___Belts__" Content="Belts:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="75"/>
+                        <TextBox x:Name="BltsTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Blts, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="50" IsReadOnly="True"/>
+                    </Grid>
+                    <Grid x:Name="gGasGiants" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="150,3,0,0" VerticalAlignment="Top" Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="___Label___Gas_Giants__" Content="Gas Giants:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="75"/>
+                        <TextBox x:Name="GasTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Gas, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="50" IsReadOnly="True"/>
+                    </Grid>
+                    <Grid x:Name="gStellar" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="3,3,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Stellar:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Foreground="Red"/>
+                        <TextBox x:Name="StellarTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Stellar, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
+                    </Grid>
+                    <Grid x:Name="gIx" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="3,3,0,0" Grid.Row="1" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Ix:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="25"/>
+                        <TextBox x:Name="IxTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Ix, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="50" IsReadOnly="True"/>
+                    </Grid>
+                    <Grid x:Name="gEx" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="100,3,0,0" Grid.Row="1" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Ex:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="25"/>
+                        <TextBox x:Name="ExTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Ex, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="50" IsReadOnly="True"/>
+                    </Grid>
+                    <Grid x:Name="gCx" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="200,3,0,0" Grid.Row="1" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Cx:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Width="25" Foreground="Red"/>
+                        <TextBox x:Name="CxTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Cx, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="50" IsReadOnly="True"/>
+                    </Grid>
+                    <Grid x:Name="gRU" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="300,3,0,0" Grid.Row="1" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="RU:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="25"/>
+                        <TextBox x:Name="RUTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding RU, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="50" IsReadOnly="True"/>
+                    </Grid>
+                    <Grid x:Name="gOrbits" Grid.Column="1" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="200,3,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Orbits:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Foreground="Red"/>
+                        <TextBox x:Name="ORBTTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding ORBT, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="50" IsReadOnly="True"/>
+                    </Grid>
+                    <TextBox x:Name="addlInfoBox" HorizontalAlignment="Left" Height="300" Margin="10,3,0,0" Grid.Row="6" Grid.RowSpan="6" TextWrapping="Wrap" VerticalAlignment="Top" Width="1140" Grid.ColumnSpan="2" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" Text="{Binding addlSysInfo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <Label x:Name="addlInfoLabel" Content="Additional System Information" HorizontalAlignment="Left" Margin="20,10,0,0" Grid.Row="5" VerticalAlignment="Top" Foreground="Red" ToolTip="Addiiotnal planets, belts, etc. " FontSize="18.667"/>
+                </Grid>
+            </TabItem>
+
+
+
+
+            <!--  __________________________________________________________________________________________________________________________________ -->
+            <!-- Notes Tab -->
+            <TabItem Header="Notes" Controls:ControlsHelper.HeaderFontSize="18" Padding="10,5" BorderThickness="1">
+                <Grid Height="650" Width="1170" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Grid x:Name="GMNotes" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="1100" Height="600">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="65"/>
+                            <RowDefinition Height="105"/>
+                            <RowDefinition Height="65"/>
+                            <RowDefinition Height="400"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="Patron" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" Width="715" Height="60">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="500"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="110"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="45"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Patron:" Grid.Column="0" HorizontalAlignment="Left" Margin="0" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="50" Height="40"/>
+                            <TextBox x:Name="PatronTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="0" Grid.Row="0" Text="{Binding Patron, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="500" BorderBrush="Red"/>
+                            <Label Content="Status:" Grid.Column="2" HorizontalAlignment="Left" Margin="0" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="50" Height="40"/>
+                            <TextBox x:Name="StatusTextBox" HorizontalAlignment="Left" Height="40" Margin="0" Grid.Row="0" Text="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="110" Grid.Column="3" BorderBrush="Red"/>
+                        </Grid>
+                        <Grid x:Name="Mission" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center" Width="715" Height="100">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Mission:" Grid.Column="0" HorizontalAlignment="Left" Margin="0" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="50" Height="85"/>
+                            <TextBox x:Name="MissionTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="85" Margin="0" Grid.Row="0" Text="{Binding Mission, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="660" BorderBrush="Red" TextWrapping="Wrap"/>
+                        </Grid>
+                        <Grid x:Name="Reward" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center" Width="715" Height="60">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Reward:" Grid.Column="0" HorizontalAlignment="Left" Margin="0" Grid.Row="0" VerticalAlignment="Center" Foreground="Red" Width="50" Height="40"/>
+                            <TextBox x:Name="RewardTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="0" Grid.Row="0" Text="{Binding Reward, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="660" BorderBrush="Red" TextWrapping="Wrap"/>
+                        </Grid>
+                        <Grid Height="350" Grid.Row="3" Margin="3" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBox x:Name="GM_NotesTextBox" HorizontalAlignment="Left" Height="350" Margin="10,3,3,3" Grid.Row="3" Text="{Binding GM Notes, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="705" BorderBrush="Red" TextWrapping="Wrap" Grid.RowSpan="2" Grid.Column="1"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+
+
+            <!--  __________________________________________________________________________________________________________________________________ -->
+            <!-- Trade Tab -->
+            <TabItem Header="Trade" Controls:ControlsHelper.HeaderFontSize="18" Padding="10,5" BorderThickness="1">
+                <Grid Height="650" Width="1170" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Grid x:Name="Grid3" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Trade Codes:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" Foreground="Red"/>
+                        <TextBox x:Name="ExpTradeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="50" Margin="3" Grid.Row="0" Text="{Binding expTrade, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="250" TextWrapping="Wrap" IsReadOnly="True"/>
+                    </Grid>
+                    <WebBrowser HorizontalAlignment="Left" Height="600" Margin="10,100,0,0" VerticalAlignment="Top" Width="1150" Source="http://travellertools.azurewebsites.net/Home/TradeInfo?sectorX=-4&amp;sectorY=0&amp;hexX=23&amp;hexY=22&amp;maxJumpDistance=3&amp;brokerScore=0&amp;advancedMode=false&amp;illegalGoods=true" ScrollViewer.CanContentScroll="True" AllowDrop="True"/>
+                </Grid>
+            </TabItem>
+
+
+            <!--  __________________________________________________________________________________________________________________________________ -->
+            <!-- Subsector Tab -->
+            <TabItem Header="Subsector" Controls:ControlsHelper.HeaderFontSize="18" Padding="10,5" BorderThickness="1">
+                <Grid Height="650" Width="1170" HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{StaticResource System_MasterViewSource}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="600"/>
+                        <ColumnDefinition Width="550"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="Grid7" DataContext="{StaticResource System_MasterViewSource}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="label1" Content="Subsector Library Information" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red" Margin="3" Grid.Row="0" FontSize="21.333"/>
+                        <TextBox x:Name="SubInfoTextBox" HorizontalAlignment="Left" Height="550" Margin="3" Grid.Row="1" Text="{Binding subInfo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="590" TextWrapping="Wrap"/>
+                    </Grid>
+                    <Grid x:Name="gSubMap" Grid.Column="1" Width="550" HorizontalAlignment="Center" Grid.RowSpan="2">
+                        <Image x:Name="image" HorizontalAlignment="Left" Height="600" Margin="25,10,0,0" VerticalAlignment="Top" Width="545" Source="{Binding subMapURL}"/>
+                    </Grid>
+                    <Label x:Name="TravellerMap_Copy1" Content="All maps provided by TravellerMap.com" HorizontalAlignment="Right" Margin="0,0,-8,-16" VerticalAlignment="Bottom" Foreground="Red" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+
+            <!--  __________________________________________________________________________________________________________________________________ -->
+            <!-- Maps Tab -->
+            <TabItem Header="Maps" Controls:ControlsHelper.HeaderFontSize="18" Background="{x:Null}" Padding="10,5" BorderThickness="1">
+                <Grid Height="650" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1170" DataContext="{StaticResource System_MasterViewSource}">
+                    <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="600" Margin="0" VerticalAlignment="Top" Width="1160">
+                        <TabItem Header="J1 - J2 - J3" Controls:ControlsHelper.HeaderFontSize="18" BorderThickness="1" Background="{x:Null}">
+                            <Grid Width="1170" Height="600" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Label x:Name="label2" Content="Jump-1 Neighborhood" HorizontalAlignment="Left" Margin="50,170,-181,-196" VerticalAlignment="Top" Foreground="Red"/>
+                                <Image x:Name="image1" HorizontalAlignment="Left" Height="225" Margin="10,200,-215,-425" VerticalAlignment="Top" Width="205" Source="{Binding j1MapURL}"/>
+                                <Label x:Name="label2_Copy" Content="Jump-2 Neighborhood" HorizontalAlignment="Left" Margin="230,100,-361,-126" VerticalAlignment="Top" Foreground="Red"/>
+                                <Image x:Name="image2" HorizontalAlignment="Left" Height="365" Margin="215,128,-570,-493" VerticalAlignment="Top" Width="355" Source="{Binding j2MapURL}"/>
+                                <Image x:Name="image3" HorizontalAlignment="Left" Height="500" Margin="570,60,-1045,-560" VerticalAlignment="Top" Width="475" Source="{Binding j3MapURL}"/>
+                                <Label x:Name="label2_Copy1" Content="Jump-3 Neighborhood" HorizontalAlignment="Left" Margin="580,30,-711,-56" VerticalAlignment="Top" Foreground="Red"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="J4 - J5" Controls:ControlsHelper.HeaderFontSize="18" Background="{x:Null}" BorderThickness="1">
+                            <Grid>
+                                <Image x:Name="image4" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Source="{Binding j4MapURL}"/>
+                                <Image x:Name="image5" HorizontalAlignment="Right" Margin="0,20,20,0" VerticalAlignment="Top" Source="{Binding j5MapURL}"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                    <Label x:Name="TravellerMap" Content="All maps provided by TravellerMap.com" HorizontalAlignment="Right" Margin="0,0,0,20" VerticalAlignment="Bottom" Foreground="Red"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="App Info" Controls:ControlsHelper.HeaderFontSize="14" BorderThickness="1" Margin="0" Visibility="Hidden">
+                <Image x:Name="image6" HorizontalAlignment="Left" Height="36" Margin="46,20,0,0" VerticalAlignment="Top" Width="68"/>
+            </TabItem>
+        </TabControl>
+
+        <!--  __________________________________________________________________________________________________________________________________ -->
+        <!-- End of Tabs for System Information-->
+
+
+
+    </Grid>
+    <!-- End of Main Grid -->
+</Controls:MetroWindow>
